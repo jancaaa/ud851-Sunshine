@@ -46,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void loadWeatherData(){
         String location = SunshinePreferences.getPreferredWeatherLocation(this);
-        new GetWeatherTask().execute(location);
+        new FetchWeatherTask().execute(location);
     }
 
-    public class GetWeatherTask extends AsyncTask<String, Void, String[]> {
+    public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
         @Override
         protected String[] doInBackground(String... strings) {
