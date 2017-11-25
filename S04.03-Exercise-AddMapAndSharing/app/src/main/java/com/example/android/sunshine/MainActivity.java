@@ -112,6 +112,18 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
         new FetchWeatherTask().execute(location);
     }
 
+    private void openMap() {
+        String addressString = "Prague";
+        Uri locUri = Uri.parse("geo:0,0?q=" + addressString);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(locUri);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
     /**
      * This method is overridden by our MainActivity class in order to handle RecyclerView item
      * clicks.
@@ -215,14 +227,18 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_refresh) {
-            mForecastAdapter.setWeatherData(null);
-            loadWeatherData();
-            return true;
+        switch (id) {
+            case R.id.action_refresh: {
+                mForecastAdapter.setWeatherData(null);
+                loadWeatherData();
+                return true;
+            }
+            case R.id.action_map: {
+                openMap();
+                return true;
+            }
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        // TODO (2) Launch the map when the map menu item is clicked
-
-        return super.onOptionsItemSelected(item);
     }
 }
